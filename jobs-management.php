@@ -57,7 +57,9 @@ $jobs = dn_get_unapproved_jobs();
                 </table>
             </div>
             <div class="col-md-4">
-
+                <form action="<?php echo admin_url('admin-ajax.php'); ?>">
+                    <input type="submit">
+                </form>
             </div>
         </div>
     </div>
