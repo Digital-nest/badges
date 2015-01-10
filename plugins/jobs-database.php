@@ -12,11 +12,21 @@
  * License: A short license name. Example: GPL2
  */
 
-define('DN_TABLE_NAME', 'job_requests');
-
 add_action('wp_ajax_submit_job', 'dn_ajax_submit_job');
 register_activation_hook( __FILE__, 'dn_create_database' );
 register_activation_hook( __FILE__, 'dn_create_mock_data' );
+
+function dn_job_table_name() {
+    return $wpdb->prefix . 'job_requests';
+}
+
+function dn_category_table_name() {
+    return $wpdb->prefix . 'job_categories';
+}
+
+function dn_skill_table_name() {
+    return $wpdb->prefix . 'job_skills';
+}
 
 /*
     dn_create_database
@@ -26,8 +36,8 @@ register_activation_hook( __FILE__, 'dn_create_mock_data' );
 function dn_create_database() {
     global $wpdb;
     $charset_collate = $wpdb->get_charset_collate();
-    $table_name = $wpdb->prefix . DN_TABLE_NAME; 
-
+    $table_name = dn_job_table_name()
+    
     $sql = "CREATE TABLE $table_name (
       id mediumint(9) NOT NULL AUTO_INCREMENT,
       time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
@@ -46,7 +56,7 @@ function dn_create_database() {
 
 function dn_create_mock_data() {
     global $wpdb;
-    $table_name = $wpdb->prefix . DN_TABLE_NAME; 
+    $table_name = dn_job_table_name() 
 
     foreach (range(0, 1) as $index) {
         $wpdb->insert($table_name, array(
@@ -61,21 +71,32 @@ function dn_create_mock_data() {
 
 function dn_get_all_jobs() {
     global $wpdb;
-    $table_name = $wpdb->prefix . DN_TABLE_NAME;
+    $table_name = dn_job_table_name()
 
     $query = "SELECT * from $table_name";
-
     $results = $wpdb->get_results($query);
 
     return $results;
 }
 
 function dn_get_approved_jobs() {
+    global $wpdb;
+    $table_name = dn_job_table_name()
 
+    $query = "SELECT * from $table_name WHERE approved = 1";
+    $results = $wpdb->get_results($query);
+
+    return $results;
 }
 
 function dn_get_unapproved_jobs() {
+    global $wpdb;
+    $table_name = dn_job_table_name()
 
+    $query = "SELECT * from $table_name where approved = 0";
+    $results = $wpdb->get_results($query);
+
+    return $results;
 }
 
 /*
@@ -86,6 +107,21 @@ function dn_get_unapproved_jobs() {
 function dn_ajax_submit_job() {
     global $wpdb;
     
-    echo 'This is a test';
+    echo 'Submitting Job...';
+    wp_redirect('/jobs?submitted=true');
+    wp_die();
+}
+
+/*
+    dn_ajax_approve_job
+
+    Approves a job.
+*/
+function dn_ajax_approve_job() {
+    global $wpdb;
+    
+    //$query = 
+
+    echo 'Approval successful';
     wp_die();
 }
