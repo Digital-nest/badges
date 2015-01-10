@@ -23,6 +23,9 @@ $jobs = dn_get_unapproved_jobs();
             });
         //});
     }
+    jQuery(document).ready(function($) {
+        
+    });
 
 </script>
 
@@ -31,8 +34,6 @@ $jobs = dn_get_unapproved_jobs();
         <div class="row">
             <div class="col-md-8">
                 <h1>Manage Jobs</h1>
-                <label>
-                <input type="checkbox">Label</label>
                 <table class="table table-striped">
                 <thead>
                     <tr>
@@ -40,25 +41,50 @@ $jobs = dn_get_unapproved_jobs();
                         <th>Contact Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Description</th>
+                        <th>Duration</th>
+                        <th>Category</th>
+                        <th>Need</th>
+                        <th>Skills</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($jobs as $job): ?>
-                    <tr>
-                        <td><?php echo $job->business_name; ?></td>
-                        <td><?php echo $job->name; ?></td>
-                        <td><?php echo $job->email; ?></td>
-                        <td><?php echo $job->phone; ?></td>
-                        <td><?php echo $job->description; ?></td>
+                    <tr data-value="<?php echo $job['id']; ?>">
+                        <td><?php echo $job['business_name']; ?></td>
+                        <td><?php echo $job['contact_name']; ?></td>
+                        <td><?php echo $job['contact_email']; ?></td>
+                        <td><?php echo $job['contact_phone']; ?></td>
+                        <td><?php echo $job['duration']; ?></td>
+                        <td><?php echo $job['name']; ?></td>
+                        <td><?php echo $job['need']; ?></td>
+                        <td><?php echo $job['skills'][0]['name']; ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
                 </table>
             </div>
             <div class="col-md-4">
+                <h3>Business Name</h3>
+                <dl>
+                    <li>contact name</li>
+                    <li>contact email</li>
+                    <li>contact phone</li>
+                    <li>duration</li>
+                    <li>need</li>
+                    <li>category</li>
+                    <li>skills</li>
+                </dl>
+                <h4>Description</h4>
+                <p>
+                    fjdkljfdslakfjskl
+                </p>
                 <form action="<?php echo admin_url('admin-ajax.php'); ?>">
-                    <input type="submit">
+                    <input type="hidden" name="action" value="approve_job">
+                    <input type="submit" value="Approve">
+                </form>
+                <form action="<?php echo admin_url('admin-ajax.php'); ?>">
+                    <input type="hidden" name="action" value="reject_job">
+                    <input type="submit" value="Reject">
                 </form>
             </div>
         </div>
