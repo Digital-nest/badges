@@ -28,13 +28,12 @@ $textdoimain = 'brizzz';
 </style>
 
 <section id="blog">
-<input type="checkbox" name="test" value="test"> test <br>
 	<div class="row">
 		<div class="col-md-6">
 			<h1>For Members</h1>
 			<p>Log in below to review current job listings:</p>
 			<br> 
-			<form method="link" action="http://digitalnest.org/jobs/job-opportunities/">
+			<form method="post" action="<?php echo admin_url('admin-ajax.php'); ?>">
 				First Name 
 		 		<input type="text" name="firstname">
 		 		<br>
@@ -49,6 +48,7 @@ $textdoimain = 'brizzz';
 		 		<br>
 		 		
 		 		<input type="submit" value="Submit">
+                                <input type="hidden" name="action" value="login_job">
 		 	</form>
 		</div>
 		<div class="col-md-6">
