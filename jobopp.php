@@ -9,17 +9,17 @@ $textdoimain = 'brizzz';
 ?>
 
 <section id="blog">
+	<div class="container">
+	<h1>Job Opportunities</h1>
 	<p>Click on the following area of expertise for job listings:</p>
-	<br>
-        <?php
-		$dn_categories = dn_get_categories();
-		foreach ($dn_categories as $category):
-        ?>
-        
-	<a href="/jobs-for-members/?category=<?php echo $category->id ?>"><?php echo $category->name?></a>
-        
-	<br>
+	<ul>
+        <?php foreach (dn_get_categories() as $category): ?>
+    	<li>
+			<a href="/jobs-for-members/?category=<?php echo $category->id ?>"><?php echo $category->name?></a>
+		</li>
         <?php endforeach; ?>
+    </ul>
+    </div>
 </section>
 
 
