@@ -11,13 +11,15 @@ $textdoimain = 'brizzz';
 <section id="blog">
 	<p>Click on the following area of expertise for job listings:</p>
 	<br>
-	<!-- Update links -->
-	<a href="digitalnest.org">Video Production</a>
+        <?php
+		$dn_categories = dn_get_categories();
+		foreach ($dn_categories as $category):
+        ?>
+        
+	<a href="/jobs-for-members/?category=<?php echo $category->id ?>"><?php echo $category->name?></a>
+        
 	<br>
-	<a href="digitalnest.org">App Development</a>
-	<br>
-	<a href="digitalnest.org">Web Design</a>
-	<br>
+        <?php endforeach; ?>
 </section>
 
 
