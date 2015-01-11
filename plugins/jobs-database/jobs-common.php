@@ -32,9 +32,11 @@ function dn_get_categories() {
 
 function dn_get_category_name($id) {
     global $wpdb;
-
     $table_name = dn_category_table_name();
-    $name = $wpdb->get_var("SELECT name from $table_name WHERE id = $id");
+
+    $sanitized_id = mysql_real_escape_string("$id");
+
+    $name = $wpdb->get_var("SELECT name from $table_name WHERE id = $sanitized_id");
 
     return $name;
 }
@@ -54,11 +56,13 @@ function dn_get_job_skills($job_id) {
     $skill_table_name = dn_skill_table_name();
     $job_skill_table_name = dn_job_skills_table_name();
 
+    $job_sanitized = mysql_real_escape_string("$job_id");
+
     $query = "
         SELECT skill.id, skill.name
         FROM $job_skill_table_name AS job_skill
         JOIN $skill_table_name AS skill
-        WHERE job_skill.job_id = $job_id
+        WHERE job_skill.job_id = $job_sanitized
         AND job_skill.skill_id = skill.id
     ";
     $skills = $wpdb->get_results($query, ARRAY_A);
@@ -107,6 +111,8 @@ function dn_get_category_jobs($category_id) {
     $job_table_name = dn_job_table_name();
     $category_table_name = dn_category_table_name();
 
+    $id_sanitized = mysql_real_escape_string($category_id);
+
     $query = "
         SELECT job.id,
                job.business_name, 
@@ -119,7 +125,7 @@ function dn_get_category_jobs($category_id) {
         FROM $job_table_name AS job
         JOIN $category_table_name AS category
         WHERE job.category = category.id
-        AND job.category = $category_id
+        AND job.category = $id_sanitized
         AND job.approved = 1";
 
     $results = $wpdb->get_results($query);
