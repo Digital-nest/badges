@@ -24,6 +24,7 @@ add_action('wp_ajax_login_job', 'dn_ajax_login_job');
 function dn_ajax_submit_job() {
     global $wpdb;
     $job_table_name = dn_job_table_name();
+    $job_skills_table_name = dn_job_skills_table_name();
 
     echo 'Submitting Job...';
 
@@ -40,7 +41,20 @@ function dn_ajax_submit_job() {
         'duration' => 'one month'
     ));
 
-    //also needs to submit skills
+    $job_id = $wpdb->insert_id;
+
+    foreach (dn_get_skills() as $skill) {
+        $key = 'skill_' . $skill->id;
+        
+        if (array_key_exists($key, $_POST)) {
+            if ($_POST[$key] == 'on') {
+                $wpdb->insert($job_skills_table_name, array(
+                    'job_id' => $job_id,
+                    'skill_id' => $skill->id
+                ));
+            }
+        }
+    }
 
     wp_redirect('/jobs/business-submission-acknowledgement?submitted=true');
     wp_die();
