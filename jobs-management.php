@@ -9,7 +9,12 @@ $textdoimain = 'brizzz';
 
 $jobs = dn_get_unapproved_jobs();
 
+$id = $_GET['category'];
+$category_name = dn_get_category_name($id);
+
 ?>
+
+<?php echo 'Video Production' . 'dsjjfksdj' . $id ?>
 
 <script type="text/javascript">
     var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
@@ -68,9 +73,7 @@ $jobs = dn_get_unapproved_jobs();
                     <dt>Skills</dt><dd id="detail-skills"></dd>
                 </dl>
                 <h5>Description</h5>
-                <p id="detail-description">
-                    
-                </p>
+                <p id="detail-description"></p>
                 <form action="<?php echo admin_url('admin-ajax.php'); ?>">
                     <input type="hidden" name="action" value="approve_job">
                     <input type="submit" value="Approve">
