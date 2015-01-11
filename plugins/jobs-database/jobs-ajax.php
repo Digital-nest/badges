@@ -5,6 +5,7 @@ require_once 'jobs-common.php';
 add_action('wp_ajax_submit_job', 'dn_ajax_submit_job');
 add_action('wp_ajax_approve_job', 'dn_ajax_approve_job');
 add_action('wp_ajax_reject_job', 'dn_ajax_reject_job');
+add_action('wp_ajax_login_job', 'dn_ajax_login_job');
 
 /*
     dn_ajax_submit_job
@@ -52,10 +53,12 @@ function dn_ajax_submit_job() {
 */
 function dn_ajax_approve_job() {
     global $wpdb;
-    
-    //$query = 
+    $id = $_POST['id'];    
+    $table = dn_job_table_name();
+    $query = "UPDATE $table SET approved=1 WHERE id=$id"; 
+    $status = $wpdb->query($query);
 
-    echo 'Approval successful';
+    wp_redirect("/job-approval/?approvalsuccess=$status");
     wp_die();
 }
 
@@ -66,9 +69,28 @@ function dn_ajax_approve_job() {
 */
 function dn_ajax_reject_job() {
     global $wpdb;
-    
-    //$query = 
+    $id = $_POST['id'];
+    $table = dn_job_table_name();
+    $query = "DELETE FROM $table WHERE id=$id";
+    $status = $wpdb->query($query); 
 
-    echo 'Rejection successful';
+    wp_redirect("/job-approval/?rejectionsuccess=$status");
     wp_die();
 }
+
+function dn_ajax_login_job() {
+    global $wpdb;
+    $fname = $_POST['firstname'];
+    $lname = $_POST['lastname'];
+    $bday = $_POST['bday'];
+    $query = "SELECT * FROM dbdn_members WHERE firstname='$fname' and lastname='$lname' and birthdate='$bday'";
+    $status = $wpdb->get_results($query);
+    //print_r($status);
+    if (empty($status)){
+       wp_redirect("/incomplete-information");
+    } else {
+       wp_redirect("/jobs/job-opportunities/");
+    }
+    wp_die();
+}
+       
