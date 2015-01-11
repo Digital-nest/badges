@@ -30,6 +30,15 @@ function dn_get_categories() {
     return $results;
 }
 
+function dn_get_category_name($id) {
+    global $wpdb;
+
+    $table_name = dn_category_table_name();
+    $name = $wpdb->get_var("SELECT name from $table_name WHERE id = $id");
+
+    return $name;
+}
+
 function dn_get_skills() {
     global $wpdb;
     $table_name = dn_skill_table_name();
@@ -93,7 +102,26 @@ function dn_get_unapproved_jobs() {
     return dn_get_all_jobs(false);
 }
 
-function dn_get_category_name($id) {
-    
-    return $name;
+function dn_get_category_jobs($category_id) {
+    global $wpdb;
+    $job_table_name = dn_job_table_name();
+    $category_table_name = dn_category_table_name();
+
+    $query = "
+        SELECT job.id,
+               job.business_name, 
+               job.contact_name,
+               job.contact_phone,
+               job.contact_email,
+               job.duration,
+               job.description,
+               category.name
+        FROM $job_table_name AS job
+        JOIN $category_table_name AS category
+        WHERE job.category = category.id
+        AND job.category = $category_id
+        AND job.approved = 1";
+
+    $results = $wpdb->get_results($query);
+    return $results;
 }
