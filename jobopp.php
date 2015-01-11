@@ -1,7 +1,7 @@
 <?php
 /*
- * Template Name: Canvas
- * Description: A Page Template with a Page Builder design.
+ * Template Name: Job Opportunities
+ * Description: Job Opportunties subpage of Jobs
  */
 get_header('home');
 global $smof_data;
@@ -9,11 +9,15 @@ $textdoimain = 'brizzz';
 ?>
 
 <section id="blog">
-	<p>Click on the following area of expertise for job listings:<p>
+	<p>Click on the following area of expertise for job listings:</p>
 	<br>
-	<a href="">Video Production</a>
-	<a href="">App Development</a>
-	<a href="">Web Design</a>
+	<!-- Update links -->
+	<a href="digitalnest.org">Video Production</a>
+	<br>
+	<a href="digitalnest.org">App Development</a>
+	<br>
+	<a href="digitalnest.org">Web Design</a>
+	<br>
 </section>
 
 
