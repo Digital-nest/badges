@@ -47,12 +47,10 @@ function dn_ajax_submit_job() {
         $key = 'skill_' . $skill->id;
         
         if (array_key_exists($key, $_POST)) {
-            if ($_POST[$key] == 'on') {
-                $wpdb->insert($job_skills_table_name, array(
-                    'job_id' => $job_id,
-                    'skill_id' => $skill->id
-                ));
-            }
+            $wpdb->insert($job_skills_table_name, array(
+                'job_id' => $job_id,
+                'skill_id' => $skill->id
+            ));
         }
     }
 

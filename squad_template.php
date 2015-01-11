@@ -73,7 +73,7 @@ $category_jobs = dn_get_category_jobs($id);
     
     <h4>Skills Needed:&nbsp</h4>
     <ul>
-    <?php foreach (dn_get_job_skills($id) as $skill): ?>
+    <?php foreach (dn_get_job_skills($job['id']) as $skill): ?>
        <li><?php echo $skill['name']; ?>
     <?php endforeach ?>
     </ul> 
