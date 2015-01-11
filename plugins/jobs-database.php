@@ -13,6 +13,8 @@
  */
 
 add_action('wp_ajax_submit_job', 'dn_ajax_submit_job');
+add_action('wp_ajax_approve_job', 'dn_ajax_approve_job');
+add_action('wp_ajax_reject_job', 'dn_ajax_reject_job');
 register_activation_hook( __FILE__, 'dn_create_database' );
 register_activation_hook( __FILE__, 'dn_create_mock_data' );
 
@@ -128,14 +130,6 @@ function dn_create_mock_data() {
     }
 }
 
-/*
-
-SELECT jobs.name, skills.name, categories.name 
-FROM `x7n_dn_jobs` AS jobs 
-JOIN `x7n_dn_job_skills` AS job_skills 
-JOIN `x7n_dn_skills` AS skills 
-JOIN `x7n_dn_categories` AS categories
-*/
 function dn_get_categories() {
     global $wpdb;
     $table_name = dn_category_table_name();
@@ -243,9 +237,8 @@ function dn_ajax_submit_job() {
     ));
 
     //also needs to submit skills
-    echo $wpdb->last_error;
 
-    wp_redirect('/jobs?submitted=true');
+    wp_redirect('/jobs/business-submission-acknowledgement?submitted=true');
     wp_die();
 }
 
@@ -268,11 +261,11 @@ function dn_ajax_approve_job() {
 
     Rejects a job.
 */
-function dn_ajax_approve_job() {
+function dn_ajax_reject_job() {
     global $wpdb;
     
     //$query = 
 
-    echo 'Approval successful';
+    echo 'Rejection successful';
     wp_die();
 }
