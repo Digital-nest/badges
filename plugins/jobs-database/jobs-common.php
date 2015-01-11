@@ -121,6 +121,8 @@ function dn_get_category_jobs($category_id) {
                job.contact_email,
                job.duration,
                job.description,
+               job.need,
+               job.paid,
                category.name
         FROM $job_table_name AS job
         JOIN $category_table_name AS category
@@ -128,6 +130,12 @@ function dn_get_category_jobs($category_id) {
         AND job.category = $id_sanitized
         AND job.approved = 1";
 
-    $results = $wpdb->get_results($query);
+    $results = $wpdb->get_results($query, ARRAY_A);
+
+    foreach ($results as $key => &$result) {
+        $result['skills'] = dn_get_job_skills($result['id']);
+    }
+
+    //$results = $wpdb->get_results($query);
     return $results;
 }

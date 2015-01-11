@@ -30,7 +30,7 @@ function dn_ajax_submit_job() {
     $wpdb->insert($job_table_name, array(
         'business_name' => $_POST['bname'],
         'location' => $_POST['location'],
-        'category' => 1,
+        'category' => $_POST['category'],
         'contact_name' => $_POST['usrname'],
         'contact_email' => $_POST['usremail'],
         'contact_phone' => $_POST['usrtel'],
