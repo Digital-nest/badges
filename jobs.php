@@ -48,7 +48,7 @@ $textdoimain = 'brizzz';
 			 	</form>
 			</div>
 			<div class="col-md-6">
-				<h1>For Businesses</h1>
+				<h1><img src="<?php bloginfo('template_url'); ?>/images/briefcase.png" style="width:50px; height: 50px; margin-right: 10px;">For Businesses</h1>
 				<p>
 					Are you looking for inspired individuals with technical skills?
 					If so, please fill out the project request form below.
