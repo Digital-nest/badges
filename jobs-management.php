@@ -8,13 +8,7 @@ global $smof_data;
 $textdoimain = 'brizzz';
 
 $jobs = dn_get_unapproved_jobs();
-
-$id = $_GET['category'];
-$category_name = dn_get_category_name($id);
-
 ?>
-
-<?php echo 'Video Production' . 'dsjjfksdj' . $id ?>
 
 <script type="text/javascript">
     var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
@@ -41,6 +35,10 @@ $category_name = dn_get_category_name($id);
         // clear all active rows
         jQuery("tr.warning").removeClass("warning");
 
+        // set form id's
+        jQuery("#approve-id").val(id);
+        jQuery("#reject-id").val(id);
+
         jQuery("#row-" + id).addClass("warning");
         jQuery("#detail-business-name").text(job["business_name"]);
         jQuery("#detail-contact-name").text(job["contact_name"]);
@@ -56,6 +54,11 @@ $category_name = dn_get_category_name($id);
 </script>
 
 <section id="blog">
+    <?php 
+        $id = $_GET['category'];
+        $category_name = dn_get_category_name($id);
+        echo $category_name;
+        ?>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -74,12 +77,14 @@ $category_name = dn_get_category_name($id);
                 </dl>
                 <h5>Description</h5>
                 <p id="detail-description"></p>
-                <form action="<?php echo admin_url('admin-ajax.php'); ?>">
+                <form method="post" action="<?php echo admin_url('admin-ajax.php'); ?>">
                     <input type="hidden" name="action" value="approve_job">
+                    <input id="approve-id" type="hidden" name="id" value="placeholder">
                     <input type="submit" value="Approve">
                 </form>
-                <form action="<?php echo admin_url('admin-ajax.php'); ?>">
+                <form method="post" action="<?php echo admin_url('admin-ajax.php'); ?>">
                     <input type="hidden" name="action" value="reject_job">
+                    <input id="reject-id" type="hidden" name="id" value="placeholder">
                     <input type="submit" value="Reject">
                 </form>
             </div>
